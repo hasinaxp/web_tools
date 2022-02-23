@@ -1,8 +1,18 @@
-import crypto from 'crypto';
+import  fetch  from "../modules/fetch.js";
 
-let str = 'happy.dog';
-let salt = crypto.randomBytes(128).toString('hex');
-let hash = crypto.pbkdf2Sync(str, salt, 9865, 256, `sha512`).toString('hex');
-let val = `${salt}${hash}`
+async function main() {
+	let res = await fetch('https://jsonplaceholder.typicode.com/todos/', {
+		method: 'POST', 
+		Headers: {
+			'Content-type' : 'application/json'
+		},
+		body: JSON.stringify({
+			title: 'neque voluptates ratione spandan mondal',
+			completed: false
+		})
+	});
+	let data = await res.json();
+	console.log(data);
+}
 
-console.log(val);
+main();

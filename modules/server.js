@@ -31,6 +31,7 @@ export default class Server extends Router
 		this.httpServer = http.createServer((req, res) => {
 			
 			req.app = this;
+			this.res = res;
 
 			//adding methods to response object
 			configureResponseMethods(res);
@@ -78,8 +79,9 @@ export default class Server extends Router
 				
 				//handle request
 				this.resolve(parsedUrl.pathname, [], req, res);
+				
 			});
-			
+		
 		});
 	}
 

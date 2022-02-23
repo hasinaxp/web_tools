@@ -1,19 +1,21 @@
 import fs from 'fs';
+import crypto from 'crypto';
 import Server from '../modules/server.js';
 import Router from '../modules/router.js';
-import {json, urlencoded, formdata} from '../modules/commonMiddlewares.js'
+import { json, urlencoded, formdata } from '../modules/commonMiddlewares.js'
 import JsonWebToken from '../modules/jsonWebToken.js'
+import WebSocket from '../modules/webSocket.js'
 
-let app =  new Server();
+let app = new Server();
 
 app.use(json());
 app.use(urlencoded());
 app.use(formdata());
 
-app.get('/', (req, res)=> {
+app.get('/', (req, res) => {
 	res.render('apple', {
 		name: 'spandan mondal',
-		pokemons : [
+		pokemons: [
 			{
 				name: 'pikachu',
 				type: 'electic',
@@ -32,11 +34,11 @@ app.get('/', (req, res)=> {
 		]
 	})
 });
-app.get('/itan', (req, res)=> {
+app.get('/itan', (req, res) => {
 	res.send("I am itan");
 });
 
-app.post('/',(req, res) => {
+app.post('/', (req, res) => {
 
 	let payload = {
 		name: 'the great spandan mondal'
@@ -54,6 +56,13 @@ app.post('/',(req, res) => {
 })
 
 
+app.get('/socket', (req, res) => {
+	//console.log(req);
+	console.log('endpoint');
+	res.send('hello world');
+});
+
+
 let router = new Router();
 
 router.post('/pokemon/:id', (req, res) => {
@@ -65,8 +74,20 @@ router.post('/pokemon/:id', (req, res) => {
 
 app.use('/anime', router);
 
+let ws = new WebSocket(app.httpServer);
+ws.onConnect = socket => {
+	console.log('connected');
+	ws.send(socket, {
+		message: 'connected to server' 
+	});
+};
+ws.onTextMessage = (data, socket) => {
+	console.log(data);
+}
 
 
 
-app.listen(4000, '0.0.0.0', () => {console.log('server listening')});
+
+
+app.listen(4000, '0.0.0.0', () => { console.log('server listening') });
 
