@@ -10,6 +10,7 @@ TODO:
 */
 
 export default class WebSocket {
+
 	constructor(httpserver) {
 		this.server = httpserver;
 		this.sockets = {};

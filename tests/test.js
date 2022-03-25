@@ -8,6 +8,9 @@ import WebSocket from '../modules/webSocket.js'
 
 let app = new Server();
 
+let a = new Server();
+a.listen(1000,)
+
 app.use(json());
 app.use(urlencoded());
 app.use(formdata());
@@ -66,6 +69,7 @@ app.get('/socket', (req, res) => {
 let router = new Router();
 
 router.post('/pokemon/:id', (req, res) => {
+
 	res.json({
 		params: req.params,
 		body: req.body
@@ -84,6 +88,7 @@ ws.onConnect = socket => {
 ws.onTextMessage = (data, socket) => {
 	console.log(data);
 }
+
 
 
 

@@ -1,6 +1,12 @@
-function test(...args)
-{
-	console.log(args);
+let doggu = {
+	name: 'big doggu'
 }
+let obj = {
+	happy : 'i am happy',
+	doggy : [() => {
+		console.log('hello world');
+	}]
+};
 
-test('apple', 'benana');
+let json = JSON.stringify(obj);
+console.log(json);

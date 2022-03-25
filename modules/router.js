@@ -1,7 +1,7 @@
 
 
 export class Route {
-
+	
 	constructor(path, method, handlerArray) {
 		this.path = path;
 		this.method = method;
@@ -21,6 +21,7 @@ export class Route {
 		}
 	}
 
+
 	match(path) {
 		let subpaths = path.split('/');
 		subpaths.shift();
@@ -36,6 +37,7 @@ export class Route {
 		}
 		return true;
 	}
+
 
 	HandleRequest(path, middlewares, req, res) {
 		
@@ -70,13 +72,13 @@ export class Route {
 }
 
 export default class Router {
-
+	
 	constructor() {
 		this.routes = [];
 		this.routers = {};
 		this.middlewares = [];
 	}
-
+	
 	resolve(path, middlewares = [], req, res) {
 		for (let routerpath in this.routers) {
 			if (path.indexOf(routerpath) === 0) {
@@ -85,7 +87,7 @@ export default class Router {
 			}
 		}
 		for (let route of this.routes) {
-			if (route.match(path) && route.method === req.method) {
+			if (route.match(path) && (route.method === req.method || route.method === 'ALL')) {
 				route.HandleRequest(path, [...middlewares, ...this.middlewares], req, res);
 				return true;
 			}
@@ -94,7 +96,7 @@ export default class Router {
 		return false;
 	}
 
-
+	
 	use(...args) {
 		if(args.length === 2)
 		{
@@ -107,24 +109,33 @@ export default class Router {
 			this.middlewares.push(args[0]);
 		}
 	}
-
+	
+	all(path, ...args) {
+		this.routes.push(new Route(path, 'ALL', args));
+	}
+	
 	get(path, ...args) {
 		this.routes.push(new Route(path, 'GET', args));
 	}
+	
 	post(path, ...args) {
 		this.routes.push(new Route(path, 'POST', args));
 	}
+	
 	put(path, ...args) {
 		this.routes.push(new Route(path, 'PUT', args));
 	}
+	
 	delete(path, ...args) {
 		this.routes.push(new Route(path, 'DELETE', args));
 	}
+	
 	patch(path, ...args) {
 		this.routes.push(new Route(path, 'PATCH', args));
 	}
+	
 	options(path, ...args) {
 		this.routes.push(new Route(path, 'PATCH', args));
 	}
 
-}
+};

@@ -2,14 +2,17 @@ import http from "http";
 import url from "url";
 
 import Router from "./router.js";
+import StaticRouter from './staticRouter.js'
 import configureResponseMethods from "./responseMethods.js"
 import configureRequestMethods from "./requestMethods.js";
+import configureCookieMethods from "./cookies.js";
 import RenderEngine from "./renderEngine.js";
 
 
 
 export default class Server extends Router
 {
+	
 	constructor() {
 		super();
 		this.port = null;
@@ -31,7 +34,6 @@ export default class Server extends Router
 		this.httpServer = http.createServer((req, res) => {
 			
 			req.app = this;
-			this.res = res;
 
 			//adding methods to response object
 			configureResponseMethods(res);
@@ -49,6 +51,8 @@ export default class Server extends Router
 				}
 				this.resolve(newPath);
 			}
+			//cookie methods
+			configureCookieMethods(req, res);
 			//prepare request data
 			this.dataChunks = [];
 			req.on('data', (chunk) => {
@@ -89,15 +93,27 @@ export default class Server extends Router
 		this.renderFunction = func(this.config);
 	}
 
+	
+	set(name, value) {
+		this.config[name] = value;
+	}
+	
+	get(name) {
+		return this.config[name];
+	}
 
-	set(option, value) {
-		this.config[option] = value;
+	createRouter() {
+		return new Router();
+	}
+
+	 createStaticRouter(path) {
+		return new Router();
 	}
 
 	listen(port, ...args) {
 		this.port = port;
 		this.httpServer.listen(port ,...args);
 	}
-	
+
 
 };

@@ -38,6 +38,7 @@ function inflateData(input, type) {
 	return output;
 }
 
+
 export function json() {
 	let inflate = true;
 	let limit = '1mb';
@@ -80,7 +81,6 @@ export function json() {
 	}
 }
 
-
 export function urlencoded() {
 	let inflate = true;
 	let limit = '1mb';
@@ -116,7 +116,6 @@ export function urlencoded() {
 		next();
 	}
 }
-
 
 export function formdata() {
 	let limit = '1mb';

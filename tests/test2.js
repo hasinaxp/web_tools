@@ -1,18 +1,30 @@
-import  fetch  from "../modules/fetch.js";
+import PostgreSqlDriver from "../modules/postgreSqlDriver.js";
+
+const pgDriver = new PostgreSqlDriver();
+const config = {
+	host: "localhost",
+	port: 5432,
+	user: "postgres",
+	password: "spandan9733",
+	database: "testdb"
+}
+
+pgDriver.onConnect = () => {
+	console.log('connetced to database');
+}
+
 
 async function main() {
-	let res = await fetch('https://jsonplaceholder.typicode.com/todos/', {
-		method: 'POST', 
-		Headers: {
-			'Content-type' : 'application/json'
-		},
-		body: JSON.stringify({
-			title: 'neque voluptates ratione spandan mondal',
-			completed: false
-		})
-	});
-	let data = await res.json();
-	console.log(data);
+	let db = await pgDriver.connect(config);
+	try {
+		let res = db.prepare("select * from items where id = ?");
+		res.bind_params('i', 1);
+		console.log(res.statement);
+		res = await res.execute();
+		console.log(res);
+	} catch (e) {
+		console.log(e);
+	}
 }
 
 main();
