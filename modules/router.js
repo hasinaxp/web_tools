@@ -80,6 +80,7 @@ export default class Router {
 	}
 	
 	resolve(path, middlewares = [], req, res) {
+
 		for (let routerpath in this.routers) {
 			if (path.indexOf(routerpath) === 0) {
 				if(this.routers[routerpath].resolve(path.substring(routerpath.length), [...middlewares, ...this.middlewares], req, res))

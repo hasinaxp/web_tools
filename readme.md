@@ -4,9 +4,10 @@ this is a simple light weight implementation of tools to help create a server ba
 
 
 
-## the functionalities
+## functionalities
 
 - express like server architechture
+- static routing
 - middlewares like bodyparser.json bodyparser.urlencoded
 - middleware for formdata
 - middleware for cross-origin-access(cros)
@@ -14,10 +15,12 @@ this is a simple light weight implementation of tools to help create a server ba
 - handlebars like view engine
 - web like fetch api for http requests
 - Wrapper class for websocket protocol for realtime socket connections
+- cookie parsing
+- database driver for postgresql
 
 
 ## minimum node version
 node 15
 
-# javascript type
+## javascript type
 module

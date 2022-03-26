@@ -32,7 +32,6 @@ export default class Server extends Router
 		}
 
 		this.httpServer = http.createServer((req, res) => {
-			
 			req.app = this;
 
 			//adding methods to response object
@@ -70,9 +69,6 @@ export default class Server extends Router
 					req.rawBodyLength =  req.headers['content-length'];
 				}
 
-			
-				//console.log(req);
-				//console.log(req.socket.readableEncoding);
 				
 				let parsedUrl = url.parse(req.url, true);
 				req.query = parsedUrl.query;
@@ -99,7 +95,12 @@ export default class Server extends Router
 	}
 	
 	get(name) {
-		return this.config[name];
+		if(arguments.length === 1)
+			return this.config[name];
+		else
+		{
+			super.get(...arguments)
+		}
 	}
 
 	createRouter() {

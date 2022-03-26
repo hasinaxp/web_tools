@@ -2,20 +2,22 @@ import fs from 'fs';
 import crypto from 'crypto';
 import Server from '../modules/server.js';
 import Router from '../modules/router.js';
-import { json, urlencoded, formdata } from '../modules/commonMiddlewares.js'
-import JsonWebToken from '../modules/jsonWebToken.js'
-import WebSocket from '../modules/webSocket.js'
+import { json, urlencoded, formdata } from '../modules/commonMiddlewares.js';
+import JsonWebToken from '../modules/jsonWebToken.js';
+import WebSocket from '../modules/webSocket.js';
+import dotenv from '../modules/env.js';
+
+dotenv();
 
 let app = new Server();
 
-let a = new Server();
-a.listen(1000,)
 
 app.use(json());
 app.use(urlencoded());
 app.use(formdata());
 
 app.get('/', (req, res) => {
+	console.log(process.env.DATABASE);
 	res.render('apple', {
 		name: 'spandan mondal',
 		pokemons: [
