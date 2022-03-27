@@ -28,16 +28,16 @@ module
 # documentation
 
 
-### Server
+## Server
 
 - type 	: class
 - usage	: create a web server
 - module: modules/server.js
 
-#### description
+### description
 > create an express like server using this class.
 > inherits from **Router**. so all the functionalities of router is also applicable for server
-#### example (1):
+### example 
 ```javascript
 import Server from 'pkg/modules/server.js'
 //create server object
@@ -49,24 +49,24 @@ app.get('/', (req, res) => {
 //listen to port
 app.listen(3000, () => { console.log('server listening at port 3000') });
 ```
-#### methods
+### methods
 
-##### server.set(name, value)
+#### server.set(name, value)
 sets a **value** with the  key **name** that can be accsess from req.app.get(name)
 
-##### server.get(name)
+#### server.get(name)
 get a **value** set in the server
 
-##### server.get(routeUrl, middleware1?, middleware2? ..., handler)
+#### server.get(routeUrl, middleware1?, middleware2? ..., handler)
 set **middlewares** and **handler** for **GET** requests on the **routeUrl** path
 the order of the function determines which function is called before other one.
 handler is called at the end. if **next()** is not called from the middleware the upocming middlewares and handler will not be called. 
 
 see other available methods is Router section
 
-##### *middleware*
+#### *middleware*
 a callback function with three arguments *req*, *res*, *next*
-#### example (2):
+### example 
 ```javascript
 function middleware (req, res, next) {
 	if(isAuthenticated) // demo if condition add your own logic
@@ -76,9 +76,9 @@ function middleware (req, res, next) {
 }
 ```
 
-##### *handler*
+#### *handler*
 a callback function with two arguments *req* and *res*
-#### example (3):
+### example :
 ```javascript
 function handler (req, res) {
 	let name = req.body.name;
@@ -115,14 +115,14 @@ res is a modified **http.ServerResponse** object which has several methods on to
 	- set view templetes folder using app.set('view folder', folderName)
 	- see **RenderEngine** section for more details
 
-##### server.createRouter()
+#### server.createRouter()
 instantiates a new **Router** object
 
-##### server.createStaticRouter()
+#### server.createStaticRouter()
 instantiates a new **StaticRouter** object
 
 
-#### server.listen(port, ...args)
+### server.listen(port, ...args)
 listens to a given port, reuturns internal **http** server
 function overloads-
 - listen(port?: number, hostname?: string, backlog?: number, listeningListener?: () => void): this;
@@ -131,17 +131,17 @@ function overloads-
 - listen(port?: number, listeningListener?: () => void): this;
 
 
-### Router
+## Router
 
 - type 	: class
 - usage	: create a router for server
 - module: modules/router.js
 
-#### description
+### description
 > create an express like router using this class.
 > server itself is an router so all router methods are available for server
 
-#### example (1):
+### example
 ```javascript
 import Server from 'pkg/modules/server.js'
 import Router from 'pkg/modules/router.js'
@@ -162,47 +162,47 @@ router.post('/pokemon/:id', (req, res) => {
 app.use('/anime', router);
 ```
 
-#### methods
+### methods
 
-##### router.use(middleware)
+#### router.use(middleware)
 sets middleware for all routes in the router.
 these middlewares are called first ,before the middlewares in the hendler mothods like get, post etc.
 order of middleware is depends on declearation of use in code
 
-##### router.use(routePath, router)
+#### router.use(routePath, router)
 set another **router** object to handle all the subroutes in the **routePath**
 
-##### router.all(routeUrl, middleware1?, middleware2? ..., handler)
+#### router.all(routeUrl, middleware1?, middleware2? ..., handler)
 set **middlewares** and **handler** for all kinds of requests(e.g. GET, POST etc.) on the **routeUrl** path
 
-##### router.get(routeUrl, middleware1?, middleware2? ..., handler)
+#### router.get(routeUrl, middleware1?, middleware2? ..., handler)
 set **middlewares** and **handler** for **GET** requests on the **routeUrl** path
 
-##### router.post(routeUrl, middleware1?, middleware2? ..., handler)
+#### router.post(routeUrl, middleware1?, middleware2? ..., handler)
 set **middlewares** and **handler** for **POST** requests on the **routeUrl** path
 
-##### router.put(routeUrl, middleware1?, middleware2? ..., handler)
+#### router.put(routeUrl, middleware1?, middleware2? ..., handler)
 set **middlewares** and **handler** for **PUT** requests on the **routeUrl** path
 
-##### router.delete(routeUrl, middleware1?, middleware2? ..., handler)
+#### router.delete(routeUrl, middleware1?, middleware2? ..., handler)
 set **middlewares** and **handler** for **DELETE** requests on the **routeUrl** path
 
-##### router.patch(routeUrl, middleware1?, middleware2? ..., handler)
+#### router.patch(routeUrl, middleware1?, middleware2? ..., handler)
 set **middlewares** and **handler** for **PATH** requests on the **routeUrl** path
 
 
 
-### StaticRouter (foldername)
+## StaticRouter (foldername)
 
 - type 	: class
 - usage	: serve a folder as router
 - module: modules/staticRouter.js
 
-#### description
+### description
 > serve files folder and all it's subfolders with same path relative to folder
 > constructor takes path to the folder as argument
 > should be used as a **Router**
-#### example :
+### example
 ```javascript
 import Server from 'pkg/modules/server.js'
 import StaticRouter from 'pkg/modules/staticRouter.js'
@@ -216,10 +216,10 @@ app.use('/', new StaticRouter(__dirname +'/public'))
 app.listen(3000, () => { console.log('server listening at port 3000') });
 ```
 
-### RenderEngine
+## RenderEngine
 an internal class for serverside renderring
 
-##### example:
+#### example
 
 > file structure
 ```
@@ -290,12 +290,12 @@ app.get('/', (req, res) => {
 app.listen(3000, () => { console.log('server listening at port 3000') });
 ```
 
-#### method
+### method
 > res.render(templateName, renderprops)
 
-#### Syntex
+### Syntex
 
-##### string interpolation of renderprops
+#### string interpolation of renderprops
 use double curly braces to get access values of **renderprops**. props are acccessable under **this**
 
 > {{ this.property }} 
@@ -328,7 +328,7 @@ same as if-else. just keep javascript part in {{ }}
 ## @include <templateName>
 use this to include a template in another template. properties will be accessable from included templates too
 
-#### example:
+### example
 card.htm
 ```html
 <div class="card">
@@ -352,13 +352,13 @@ res.render('page', { cards : [
 	{title: 'title 3', description: 'description 2'}
 ]})
 ```
-### env 
+## env 
 
 - type 	: function
 - usage	: set environment variables
 - module: modules/env.js
 
-#### example
+### example
 >.env
 ```
 key1=value1
@@ -373,7 +373,7 @@ env();
 console.log(process.env.key1);
 ```
 
-### common middlewares
+## common middlewares
 set of functions to add essential middlewares to server app
 -	cros
 - json
@@ -382,7 +382,7 @@ set of functions to add essential middlewares to server app
 	- addtional options: inflate, limit, verify
 - formdata
 	-additional options: limit
-#### example
+### example
 ```javascript
 import Server from '../modules/server.js';
 import { json, urlencoded, formdata, cros } from '../modules/commonMiddlewares.js';
@@ -406,16 +406,16 @@ app.use(urlencoded());
 app.use(formdata);
 ```
 
-### JsonWebToken
+## JsonWebToken
 
 - type 	: class
 - usage	: create and vertify jwts
 - module: modules/jsonWebToken.js
 
-#### description
+### description
 > create and verrify json web tokens for authentication
 
-#### example
+### example
 ```javascript
 import JWT from 'pkg/modules/jsonWebToken.js'
 
@@ -431,7 +431,9 @@ if(v) {
 	console.log('invalid token');
 }
 ```
-##### jwt.sign(payload, secret, options)
+### methods
+
+#### jwt.sign(payload, secret, options)
 used to create jwt tokens
 - payload : data to be encoded as jwt ( type: Object)
 - secret : private key to encrypt data
@@ -443,22 +445,22 @@ used to create jwt tokens
 	- notBefore : time until which the token is not valid (i.e. '10s', '2h')
 	- issuer
 
-##### jwt.verify(token, secret)
+#### jwt.verify(token, secret)
 used to verify a token. 
 if the token is valid returns payload else returns false.
 
 
-### WebSocket (httpServer)
+## WebSocket (httpServer)
 
 - type 	: class
 - usage	: use websocket api to make socket connection to client
 - module: modules/webSocket.js
 
-#### description
+### description
 > create and use websocket server for realtime socket connection with websocket api provided by client browser
 > get **httpServer** from **app.httpServer** where app is an object of Server class
 
-#### example
+### example
 ```javascript
 import Server from '../modules/server.js';
 import WebSocket from '../modules/webSocket.js';
@@ -481,14 +483,15 @@ ws.onTextMessage = (data, socket, sid) => {
 
 app.listen(3000, () => { console.log('server listening at port 3000') });
 ```
+### callbacks
 
-##### webSocket.onConnect
+#### webSocket.onConnect
 callback that is called when client connects
 > (socket, sid) => {}
 **socket** represents the connection socket of the client. store the socket to use it to send message data to client.
 **sid** represents unique uuid assigned to the client
 
-##### webSocket.onClose
+#### webSocket.onClose
 callback that is called when client disconnects
 > (socket, sid) => {}
 **socket** represents the connection socket of the client.
@@ -507,6 +510,8 @@ callback that is called when client sends a message
 **data** contains the message in text format
 **socket** represents the client socket. use it to identify client
 **sid** represents unique uuid assigned to the client
+
+### methods
 
 #### webSocket.send(socket, obj)
 function to send message to client
@@ -535,16 +540,16 @@ close connection with client **socket**
 close connection with client with **sid** as unique id
 
 
-### PostgreSqlDriver 
+## PostgreSqlDriver 
 
 - type 	: class
 - usage	: database access for postgresql
 - module: modules/postgreSqlDriver.js
 
-#### description
+### description
 >connect to postgresql sql database, execute queries, get results
 
-#### example :
+### example :
 ```javascript
 import PostgreSqlDriver from "../modules/postgreSqlDriver.js";
 
@@ -587,7 +592,9 @@ async function main() {
 
 main();
 ```
-##### pgDriver.connect(config):
+### methods
+
+#### pgDriver.connect(config):
 return pgDriver object that is connected to the database mentioned in the config
 all options of config must be provided
 - host
@@ -596,10 +603,10 @@ all options of config must be provided
 - password
 - database
 
-##### pgDriver.disconnect():
+#### pgDriver.disconnect():
 disconnect current database connection
 
-##### pgDriver.query(sql, callback?)
+#### pgDriver.query(sql, callback?)
 **sql** represents the sql query
 **callback** represent a fucntion that is called when the query is executed. (optional)
 
@@ -607,10 +614,10 @@ returns a javascript promise containing **result** object
 
 the callback function looks like
 > (err, result) => {}
-###### err
+##### err
 if there is error in execution err will contain the error, else it will be null for successful query and the **result** object will contain output of the query
 
-###### result
+##### result
 contains different fields and method
 - num_rows : number of rows in the output
 - fields : titles of the attribute present in a row
@@ -625,7 +632,7 @@ contains different fields and method
 - fetch() : return array containing all correctly formatted rows. 
 
 
-##### pgDriver.prepare(sqlPrepareStatement)
+#### pgDriver.prepare(sqlPrepareStatement)
 returns an prepareStatement object with functions to make secure sql queries
 - bind_params(format, ...args) :function to bind parameters to the statement  
 	-	format : stiring representing datatypes of other argulments in order. (i.e. "iss")
@@ -635,11 +642,13 @@ returns an prepareStatement object with functions to make secure sql queries
 	-args: paramenters to replace ? in **sqlPrepareStatement**
 - execute() : asynchronous function which returns **result** object
 
-##### pgDriver.onConnect
+### callbacks
+
+#### pgDriver.onConnect
 callback for successful connection to database
 
-##### pgDriver.onDisconnect
+#### pgDriver.onDisconnect
 callback for successfully disconnecting from database
 
-##### pgDriver.onError
+#### pgDriver.onError
 callback for error handling, has one argument containing error
