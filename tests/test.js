@@ -5,9 +5,9 @@ import Router from '../modules/router.js';
 import { json, urlencoded, formdata } from '../modules/commonMiddlewares.js';
 import JsonWebToken from '../modules/jsonWebToken.js';
 import WebSocket from '../modules/webSocket.js';
-import dotenv from '../modules/env.js';
+import env from '../modules/env.js';
 
-dotenv();
+env();
 
 let app = new Server();
 
