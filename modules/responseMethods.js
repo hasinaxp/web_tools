@@ -1,11 +1,22 @@
 import Mime from "./mime.js";
+import fs from 'fs';
 
 
-export function send(data)
-{
+export function send(data) {
 	this.write(data);
 	this.end();
 	return this;
+}
+
+export function sendFile(filepath) {
+	if(fs.existsSync(filepath)) {
+		let file = fs.readFileSync(filepath);
+		this.write(file);
+		this.end();
+	}
+	else {
+		this.end();
+	}
 }
 
 export function status(code)
@@ -46,6 +57,7 @@ export function json(obj)
 export default function configureResponseMethods(res)
 {
 	res.send = send;
+	res.sendFile = sendFile;
 	res.status = status;
 	res.header = header;
 	res.type = type;

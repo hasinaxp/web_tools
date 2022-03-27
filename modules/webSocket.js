@@ -15,11 +15,11 @@ export default class WebSocket {
 		this.server = httpserver;
 		this.sockets = {};
 
-		this.onMessage = (data, socket) => { };
-		this.onTextMessage = (data, socket) => { };
+		this.onMessage = (data, socket, sid) => { };
+		this.onTextMessage = (data, socket, sid) => { };
 
-		this.onConnect = (socket) => { };
-		this.onCose = (socket) => { };
+		this.onConnect = (socket, sid) => { };
+		this.onCose = (socket, sid) => { };
 
 
 		this.lastError = '';
@@ -49,11 +49,11 @@ export default class WebSocket {
 			];
 			handshake = handshake.join('\r\n');
 			handshake += '\r\n\r\n';
-
-			this.sockets[`${crypto.randomUUID()}`] = socket;
+			let sid = `${crypto.randomUUID()}`;
+			this.sockets[sid] = socket;
 			socket.write(handshake);
 
-			this.onConnect(socket);
+			this.onConnect(socket,sid);
 
 			socket.on("data", (data) => {
 				let d = this.parseMessage(data);
@@ -145,6 +145,24 @@ export default class WebSocket {
 		return buffer;
 	}
 
+	constructTextMessage(text) {
+		const textLength = Buffer.byteLength(text);
+		const byteCount = textLength < 126 ? 0 : 2;
+		const payloadLength = byteCount === 0 ? textLength : 126;
+		const buffer = Buffer.alloc(2 + byteCount + textLength);
+
+		buffer.writeUInt8(0b10000001, 0);
+		buffer.writeUInt8(payloadLength, 1);
+
+		let payloadOffset = 2;
+		if (byteCount > 0) {
+			buffer.writeUInt16BE(textLength, 2);
+			payloadOffset += byteCount;
+		}
+		buffer.write(text, payloadOffset);
+		return buffer;
+	}
+
 	send(socket, obj) {
 		let clientSocket = socket;
 		if (typeof (socket) === 'string')
@@ -155,6 +173,18 @@ export default class WebSocket {
 			this.lastError = error.message;
 		}
 	}
+
+	sendText(socket, text) {
+		let clientSocket = socket;
+		if (typeof (socket) === 'string')
+			clientSocket = this.sockets[socket];
+		try {
+			clientSocket.write(this.constructTextMessage(text));
+		} catch (error) {
+			this.lastError = error.message;
+		}
+	}
+
 	closeConnection(socket) {
 
 		let clientSocket = socket;

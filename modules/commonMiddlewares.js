@@ -2,7 +2,7 @@ import zlib from 'zlib';
 import { stringToBytes, stringToArrayBuffer } from "./utils.js";
 import Mime from './mime.js';
 
-export default function cros() {
+export function cros() {
 	return (req, res, next) => {
 
 		res.setHeader('Access-Control-Allow-Origin', '*');
@@ -13,9 +13,6 @@ export default function cros() {
 	}
 }
 
-function defVerify(req, res, buf, encoding) {
-	return true;
-}
 
 function inflateData(input, type) {
 	let output;
@@ -68,7 +65,7 @@ export function json() {
 				data = req.rawBody.toString('utf8');
 
 			if(verify)
-				verify(req, res, buf, req.get('Content-Encoding'));
+				verify(req, res, req.rawBody, req.get('Content-Encoding'));
 
 			if (reviver) {
 				req.body = JSON.parse(data, reviver);
@@ -105,6 +102,9 @@ export function urlencoded() {
 				data = inflateData(req.rawBody, req.get('Content-Encoding')).toString('utf8');
 			else
 				data = req.rawBody.toString('utf8');
+
+			if(verify)
+				verify(req, res, req.rawBody, req.get('Content-Encoding'));
 
 			data = data.split('&');
 			req.body = {};

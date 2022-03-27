@@ -54,6 +54,24 @@ export default class PostgreSqlDriver {
 					return row;
 				}
 				return null;
+			},
+			fetch : function() {
+				let rows = [];
+				for(let row of this.rows) {
+					let i = 0;
+					for(let key in row) {
+						if(this.types[i].match('int'))
+							row[key] = Math.floor(Number(row[key]));
+						if(this.types[i].match('float') || this.types[i].match('double'))
+							row[key] = Number(row[key]);
+						if(this.types[i] == 'json') {
+							row[key] = JSON.parse(row[key]);
+						}
+						i++;
+					}
+					rows.push(row);
+				}
+				return rows;
 			}
 		}
 		this.onConnect = () => { };

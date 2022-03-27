@@ -33,7 +33,6 @@ export default class Server extends Router
 
 		this.httpServer = http.createServer((req, res) => {
 			req.app = this;
-
 			//adding methods to response object
 			configureResponseMethods(res);
 			res.render = (view, props) =>{
@@ -114,6 +113,7 @@ export default class Server extends Router
 	listen(port, ...args) {
 		this.port = port;
 		this.httpServer.listen(port ,...args);
+		return this.httpServer
 	}
 
 

@@ -91,3 +91,20 @@ export function generateRandomString(length = 16) {
 export function uuid() {
 	return crypto.randomUUID()
 }
+export function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export function flattenArray (array, result) {
+  for (var i = 0; i < array.length; i++) {
+    var value = array[i]
+
+    if (Array.isArray(value)) {
+      flattenForever(value, result)
+    } else {
+      result.push(value)
+    }
+  }
+
+  return result
+}
