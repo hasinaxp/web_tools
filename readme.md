@@ -265,7 +265,7 @@ app.set('view folder', './views')
 // render page.htm template  at localhost:3000/
 app.get('/', (req, res) => {
 	console.log(process.env.DATABASE);
-	res.render('apple', {
+	res.render('page', {
 		name: 'spandan mondal',
 		pokemons: [
 			{
@@ -652,3 +652,16 @@ callback for successfully disconnecting from database
 
 #### pgDriver.onError
 callback for error handling, has one argument containing error
+
+
+## fetch (url, options)
+- type 	: function
+- usage	: Make http requests 
+- module: modules/fetch.js
+
+serverside implementation of fetch function to make http calls. By default it makes GET request.
+
+**options** 
+-	method : method of request (i.e. 'GET', 'POST', etc)
+- headers : any headers you want to add to your request, contained within this object.
+- body : Any body that you want to add to your request
