@@ -39,7 +39,7 @@ module
 > inherits from **Router**. so all the functionalities of router is also applicable for server
 ### example 
 ```javascript
-import Server from 'pkg/modules/server.js'
+import Server from 'sp-wt/modules/server.js'
 //create server object
 let app = new Server();
 //add routes (see router class for more)
@@ -143,8 +143,8 @@ function overloads-
 
 ### example
 ```javascript
-import Server from 'pkg/modules/server.js'
-import Router from 'pkg/modules/router.js'
+import Server from 'sp-wt/modules/server.js'
+import Router from 'sp-wt/modules/router.js'
 //create server object
 let app = new Server();
 //create a router object
@@ -204,8 +204,8 @@ set **middlewares** and **handler** for **PATH** requests on the **routeUrl** pa
 > should be used as a **Router**
 ### example
 ```javascript
-import Server from 'pkg/modules/server.js'
-import StaticRouter from 'pkg/modules/staticRouter.js'
+import Server from 'sp-wt/modules/server.js'
+import StaticRouter from 'sp-wt/modules/staticRouter.js'
 
 //create server object
 let app = new Server();
@@ -253,8 +253,8 @@ app.js
 ```
 > ./app.js
 ```javascript
-import Server from 'pkg/modules/server.js'
-import StaticRouter from 'pkg/modules/staticRouter.js'
+import Server from 'sp-wt/modules/server.js'
+import StaticRouter from 'sp-wt/modules/staticRouter.js'
 
 //create server object
 let app = new Server();
@@ -403,7 +403,7 @@ app.use(urlencoded());
 // 		contentType : mimetype of the uploaded file,
 // 		extension : extension of the uploaded file,
 // 		buffer : Buffer object containing binary data of the file 
-app.use(formdata);
+app.use(formdata());
 ```
 
 ## JsonWebToken
@@ -417,7 +417,7 @@ app.use(formdata);
 
 ### example
 ```javascript
-import JWT from 'pkg/modules/jsonWebToken.js'
+import JWT from 'sp-wt/modules/jsonWebToken.js'
 
 //instanciate jwt object
 let jwt = new JWT();
