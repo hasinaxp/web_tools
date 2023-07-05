@@ -6,8 +6,9 @@ import fetch from './modules/fetch.js';
 import JsonWebToken from './modules/jsonWebToken.js';
 import Router from './modules/router.js';
 import WebSocket from './modules/webSocket.js';
-import PostgreSqlDriver from './modules/postgreSqlDriver.js';
+import PostgreSql from './modules/postgres.js';
 import {hash, verifyHash, generateRandomString, uuid} from "./modules/utils.js";
+import Env from './modules/env.js';
 
 
 const Package = {
@@ -18,11 +19,12 @@ const Package = {
 	fetch,JsonWebToken,
 	Router,
 	WebSocket,
-
+    Env,
 	generateRandomString,
 	hash,
 	verifyHash,
 	uuid,
+
 };
 
 export default Package;
