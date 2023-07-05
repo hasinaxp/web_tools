@@ -1,0 +1,14 @@
+{
+  "name": "sp-wt",
+  "version": "1.0.7",
+  "description": "this is a simple, fast light weight implementation of tools to help create a server based web application without using any 3rd party library, other than the core libraries provided by node.",
+  "main": "index.js",
+  "type": "module",
+  "keywords": ["http-server", "jwt", "postgressql", "web-socket", "dotenv"],
+  "author": "spandan mondal",
+  "license": "ISC",
+  "homepage": "https://github.com/hasinaxp/web_tools",
+  "scripts": {
+    "test": " node ./tests/dbTest.js"
+  }
+}
